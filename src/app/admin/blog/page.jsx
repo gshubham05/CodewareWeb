@@ -92,10 +92,6 @@ export default function AdminBlogPage() {
           />
 
           <div>
-            <label className="block mb-2 font-semibold">
-              Full Blog Content
-            </label>
-
             <div>
               <label className="block mb-2 font-semibold">
                 Full Blog Content (HTML Allowed)
@@ -118,7 +114,9 @@ export default function AdminBlogPage() {
             className="w-full border rounded-lg p-3"
           >
             <option value="draft">Draft</option>
-            <option value="published">Publish</option>
+            <option value="published" selected>
+              Publish
+            </option>
           </select>
 
           <button

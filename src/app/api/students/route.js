@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import Student from "../../models/Student";
 import { connectDB } from "../../lib/db";
-import { verifyToken } from "../../middleware/auth";
+import { verifyToken } from "../../lib/verifyToken";
 import nodemailer from "nodemailer";
 
 /* ============================

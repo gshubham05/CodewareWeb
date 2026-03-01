@@ -34,9 +34,6 @@ export async function POST(req) {
     return Response.json(blog);
   } catch (error) {
     console.log(error);
-    return Response.json(
-      { message: "Error creating blog" },
-      { status: 500 }
-    );
+    return Response.json({ message: "Error creating blog" }, { status: 500 });
   }
 }

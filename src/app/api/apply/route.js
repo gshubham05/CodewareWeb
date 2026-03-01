@@ -1,7 +1,7 @@
 import { connectDB } from "../../lib/db";
 import InternApplication from "../../models/InternApplication";
 import nodemailer from "nodemailer";
-import { verifyToken } from "../../middleware/auth";
+import { verifyToken } from "../../lib/verifyToken";
 import { NextResponse } from "next/server";
 // =========================
 // POST → PUBLIC (Students)

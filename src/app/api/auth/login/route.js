@@ -9,15 +9,19 @@ export async function POST(req) {
     password === process.env.ADMIN_PASSWORD
   ) {
     const token = jwt.sign(
-      {
-        username,
-        role: "admin"   // 🔥 VERY IMPORTANT
-      },
+      { username, role: "admin" },
       process.env.JWT_SECRET,
       { expiresIn: "1d" }
     );
 
-    return NextResponse.json({ success: true, token });
+    const response = NextResponse.json({ message: "Login success" });
+
+    response.cookies.set("token", token, {
+      httpOnly: true,
+      path: "/",
+    });
+
+    return response;
   }
 
   return NextResponse.json(
@@ -25,3 +29,4 @@ export async function POST(req) {
     { status: 401 }
   );
 }
+
