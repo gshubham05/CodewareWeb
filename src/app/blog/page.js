@@ -4,12 +4,14 @@ import Link from "next/link";
 
 export default async function BlogListPage() {
   await connectDB();
-  const blogs = await Blog.find({ status: "published" }).sort({
+  const blogs = await Blog.find().sort({
     createdAt: -1,
   });
 
+  console.log("blogs : ",blogs)
+
   return (
-    <div className="bg-gray-50 min-h-screen py-16">
+    <div className="bg-gray-50 mt-20 min-h-screen py-16">
       <div className="max-w-6xl mx-auto px-6">
         <h1 className="text-4xl font-bold mb-12 text-center">
           Our Latest Blogs

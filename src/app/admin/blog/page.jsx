@@ -13,7 +13,7 @@ export default function AdminBlogPage() {
     mediaType: "image",
     youtubeUrl: "",
     thumbnail: "",
-    status: "draft",
+    keywords: [],
   });
 
   const [seoScore, setSeoScore] = useState(null);
@@ -108,16 +108,23 @@ export default function AdminBlogPage() {
             </div>
           </div>
 
-          <select
-            name="status"
-            onChange={handleChange}
+          <input
+            type="text"
+            name="keywords"
+            placeholder="Enter keywords separated by comma"
+            onChange={(e) => {
+              const value = e.target.value;
+
+              // Convert comma-separated string into array
+              const keywordsArray = value
+                .split(",")
+                .map((item) => item.trim())
+                .filter((item) => item !== "");
+
+              setForm({ ...form, keywords: keywordsArray });
+            }}
             className="w-full border rounded-lg p-3"
-          >
-            <option value="draft">Draft</option>
-            <option value="published" selected>
-              Publish
-            </option>
-          </select>
+          />
 
           <button
             type="submit"

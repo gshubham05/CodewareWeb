@@ -110,7 +110,7 @@ export default function Footer() {
                 rel="noopener noreferrer"
                 title="Directions to Codeware IT Pvt Ltd"
               >
-                <FaMapMarkerAlt className="inline mr-2" aria-hidden="true" /> Karanpur, Prem Nagar, Dehradun,
+                <FaMapMarkerAlt className="inline mr-2" aria-hidden="true" /><br /> (I) Adhohi wala (Sahastradhara Crossing), <br />(II) Prem Nagar, Dehradun,
                 Uttarakhand 248001
               </a>
             </li>
@@ -162,7 +162,7 @@ export default function Footer() {
       {/* Copyright */}
       <div className="text-center mt-6 text-gray-400 text-sm">
         <a href="https://wa.me/message/WF4V4DY7R53QH1" title="WhatsApp Contact" rel="noopener noreferrer" target="_blank">
-          © 2025 Codeware IT Pvt Ltd. All rights reserved.
+          © 2026 Codeware IT Pvt Ltd. All rights reserved.
         </a>
       </div>
     </footer>

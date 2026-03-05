@@ -29,6 +29,7 @@ export async function POST(req) {
       thumbnail: safeThumbnail,
       status: body.status || "draft",
       slug,
+      seoKeywords: body.keywords
     });
 
     return Response.json(blog);
