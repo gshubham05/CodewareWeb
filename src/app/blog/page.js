@@ -6,6 +6,9 @@ export const metadata = {
 }
 
 async function getBlogs() {
+//  const res = await fetch(`http://localhost:3000/api/blog`, {
+//   cache: "no-store"
+//  })
  const res = await fetch(`${process.env.NEXT_PUBLIC_URL}/api/blog`, {
   cache: "no-store"
  })
@@ -34,7 +37,7 @@ export default async function BlogPage() {
       <div className="border rounded-xl p-5 hover:shadow-lg">
 
        <img
-        src={blog.image}
+        src={blog.thumbnail}
         alt={blog.title}
         className="rounded-lg mb-4"
        />
