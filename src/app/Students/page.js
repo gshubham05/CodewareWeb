@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import courseStudents from "./data";
+import Script from "next/script";
 
 const ITEMS_PER_PAGE = 8;
 
@@ -18,29 +19,35 @@ export default function CourseStudentsPage() {
 
   return (
     <>
-      <Head>
-        <script
-          type="application/ld+json"
-          dangerouslySetInnerHTML={{
-            __html: JSON.stringify(
-              students.map((student) => ({
-                "@context": "https://schema.org",
+      <Script
+        id="students-schema"
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{
+          __html: JSON.stringify({
+            "@context": "https://schema.org",
+            "@type": "ItemList",
+            name: "Codeware IT Course Students",
+            description:
+              "Students who completed industry-ready courses at Codeware IT Pvt Ltd Dehradun including MERN Stack, Full Stack Development and Programming.",
+            itemListElement: courseStudents.map((student, index) => ({
+              "@type": "ListItem",
+              position: index + 1,
+              item: {
                 "@type": "Person",
                 name: student.name,
                 jobTitle: student.role,
+                image: `https://www.codewareit.in/${student.image}`,
+                url: `https://www.codewareit.in/Students/${student.id}`,
                 alumniOf: {
                   "@type": "Organization",
                   name: "Codeware IT Pvt Ltd",
                   url: "https://www.codewareit.in",
                 },
-                url: `https://www.codewareit.in/Students/${student.id}`,
-                image: `https://www.codewareit.in/${student.image}`,
-                certificate: `https://www.codewareit.in/${student.id}/certificate`,
-              }))
-            ),
-          }}
-        />
-      </Head>
+              },
+            })),
+          }),
+        }}
+      />
       <main className="bg-gradient-to-r from-blue-800 to-purple-900  min-h-screen text-white mt-20">
         {/* Hero */}
         <section className="text-center py-16 px-6">
