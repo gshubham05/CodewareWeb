@@ -1,9 +1,22 @@
+"use client";
+
 import React from "react";
 
+import { event1 } from "../lib/gtag";
+
 const Whatsappicon = () => {
+  const handleClick = () => {
+    event1({
+      action: "whatsapp_click",
+      category: "engagement",
+      label: "header_whatsapp",
+    });
+  };
+
   return (
     <a
-      href="https://wa.me/9837218345" // Replace with your WhatsApp number
+      onClick={handleClick}
+      href="https://wa.me/9837218345"
       target="_blank"
       rel="noopener noreferrer"
       className="fixed bottom-6 right-5 w-12 h-12 bg-green-500 rounded-full shadow-lg flex items-center justify-center hover:scale-110 transition-transform duration-300"

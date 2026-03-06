@@ -5,6 +5,7 @@ import Footer from "./Components/Footer";
 import Whatsappicon from "./Components/Whatsappicon";
 import MetaPixel from "./Components/MetaPixel";
 import RouteChangeTracker from "./Components/RouteChangeTracker";
+import GoogleAnalytics from "./Components/GoogleAnalytics";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -35,12 +36,11 @@ export const metadata = {
     "IT training institute in dehradun",
     "coding classes in dehradun",
     "software development internship dehradun",
-    "best computer institute in dehradun"
+    "best computer institute in dehradun",
   ],
 
   openGraph: {
-    title:
-      "Best Java, Python, C & AI Institute in Dehradun | Codeware IT",
+    title: "Best Java, Python, C & AI Institute in Dehradun | Codeware IT",
     description:
       "Top coding institute in Dehradun offering Java, Python, C language, MERN Stack & AI courses with IT internships.",
     url: "https://www.codewareit.in",
@@ -59,8 +59,7 @@ export const metadata = {
 
   twitter: {
     card: "summary_large_image",
-    title:
-      "Best Coding & AI Institute in Dehradun",
+    title: "Best Coding & AI Institute in Dehradun",
     description:
       "Join Codeware IT Pvt Ltd for Java, Python, C language, AI & IT internships in Dehradun.",
     images: ["/og-image.jpg"],
@@ -89,9 +88,25 @@ export default function RootLayout({ children }) {
         <MetaPixel />
         <RouteChangeTracker />
         <Navbar />
+        <GoogleAnalytics />
         {children}
         <Whatsappicon />
         <Footer />
+
+        <Script
+          src="https://www.googletagmanager.com/gtag/js?id=G-CHHEXD2NKX"
+          strategy="afterInteractive"
+        />
+
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            window.gtag = gtag;
+            gtag('js', new Date());
+            gtag('config', 'G-CHHEXD2NKX');
+          `}
+        </Script>
       </body>
     </html>
   );
