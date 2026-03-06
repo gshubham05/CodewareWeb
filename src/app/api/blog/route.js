@@ -38,3 +38,16 @@ export async function POST(req) {
     return Response.json({ message: "Error creating blog" }, { status: 500 });
   }
 }
+
+
+  
+
+export async function GET() {
+
+  await connectDB();
+
+  const blogs = await Blog.find().sort({ createdAt: -1 });
+
+  return Response.json(blogs);
+
+}

@@ -1,11 +1,9 @@
 "use client";
 
-import { useState } from "react";
-import dynamic from "next/dynamic";
-
-import RichTextEditor from "../../Components/RichTextEditor.jsx";
+import { useState, useEffect } from "react";
 
 export default function AdminBlogPage() {
+
   const [form, setForm] = useState({
     title: "",
     excerpt: "",
@@ -16,6 +14,7 @@ export default function AdminBlogPage() {
     keywords: [],
   });
 
+  const [blogs, setBlogs] = useState([]);
   const [seoScore, setSeoScore] = useState(null);
   const [loading, setLoading] = useState(false);
 
@@ -23,6 +22,18 @@ export default function AdminBlogPage() {
     setForm({ ...form, [e.target.name]: e.target.value });
   };
 
+  // FETCH BLOGS
+  const fetchBlogs = async () => {
+    const res = await fetch("/api/blog");
+    const data = await res.json();
+    setBlogs(data);
+  };
+
+  useEffect(() => {
+    fetchBlogs();
+  }, []);
+
+  // CREATE BLOG
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -34,18 +45,38 @@ export default function AdminBlogPage() {
     });
 
     const data = await res.json();
-    console.log("data ", data);
+
     setSeoScore(data.seoScore);
     setLoading(false);
+
     alert("Blog Created Successfully");
+
+    fetchBlogs();
+  };
+
+  // DELETE BLOG
+  const deleteBlog = async (id) => {
+
+    if (!confirm("Delete this blog?")) return;
+
+    await fetch(`/api/blog/${id}`, {
+      method: "DELETE",
+    });
+
+    fetchBlogs();
   };
 
   return (
     <div className="min-h-screen bg-gray-100 py-16">
+
       <div className="max-w-3xl mx-auto bg-white shadow-xl rounded-2xl p-10">
-        <h1 className="text-3xl font-bold mb-8 text-center">Create Blog</h1>
+
+        <h1 className="text-3xl font-bold mb-8 text-center">
+          Create Blog
+        </h1>
 
         <form onSubmit={handleSubmit} className="space-y-6">
+
           <input
             type="text"
             name="title"
@@ -53,6 +84,7 @@ export default function AdminBlogPage() {
             onChange={handleChange}
             className="w-full border rounded-lg p-3"
           />
+
           <select
             name="mediaType"
             value={form.mediaType}
@@ -67,8 +99,7 @@ export default function AdminBlogPage() {
             <input
               type="text"
               name="thumbnail"
-              placeholder="Enter image path (example: /hero.jpeg)"
-              value={form.thumbnail}
+              placeholder="Enter image path"
               onChange={handleChange}
               className="w-full border rounded-lg p-3"
             />
@@ -91,31 +122,20 @@ export default function AdminBlogPage() {
             className="w-full border rounded-lg p-3"
           />
 
-          <div>
-            <div>
-              <label className="block mb-2 font-semibold">
-                Full Blog Content (HTML Allowed)
-              </label>
-
-              <textarea
-                name="content"
-                rows="15"
-                placeholder="<h2>Heading</h2> <p>Your paragraph...</p>"
-                value={form.content}
-                onChange={handleChange}
-                className="w-full border rounded-lg p-4 font-mono text-sm"
-              />
-            </div>
-          </div>
+          <textarea
+            name="content"
+            rows="12"
+            placeholder="HTML Content"
+            onChange={handleChange}
+            className="w-full border rounded-lg p-3"
+          />
 
           <input
             type="text"
-            name="keywords"
-            placeholder="Enter keywords separated by comma"
+            placeholder="keywords separated by comma"
             onChange={(e) => {
               const value = e.target.value;
 
-              // Convert comma-separated string into array
               const keywordsArray = value
                 .split(",")
                 .map((item) => item.trim())
@@ -128,12 +148,66 @@ export default function AdminBlogPage() {
 
           <button
             type="submit"
-            className="w-full bg-blue-600 text-white py-3 rounded-lg hover:bg-blue-700 transition"
+            className="w-full bg-blue-600 text-white py-3 rounded-lg"
           >
             Create Blog
           </button>
+
         </form>
+
       </div>
+
+      {/* BLOG LIST */}
+
+      <div className="max-w-5xl mx-auto mt-16">
+
+        <h2 className="text-2xl font-bold mb-6">
+          All Blogs
+        </h2>
+
+        <div className="grid md:grid-cols-2 gap-6">
+
+          {blogs.map((blog) => (
+
+            <div
+              key={blog._id}
+              className="bg-white p-6 shadow rounded-xl"
+            >
+
+              <h3 className="text-xl font-semibold mb-2">
+                {blog.title}
+              </h3>
+
+              <p className="text-gray-600 mb-4">
+                {blog.excerpt}
+              </p>
+
+              <div className="flex gap-3">
+
+                <a
+                  href={`/admin/blog/edit/${blog._id}`}
+                  className="bg-yellow-500 text-white px-4 py-2 rounded"
+                >
+                  Edit
+                </a>
+
+                <button
+                  onClick={() => deleteBlog(blog._id)}
+                  className="bg-red-600 text-white px-4 py-2 rounded"
+                >
+                  Delete
+                </button>
+
+              </div>
+
+            </div>
+
+          ))}
+
+        </div>
+
+      </div>
+
     </div>
   );
 }

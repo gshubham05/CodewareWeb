@@ -8,10 +8,7 @@ export default async function sitemap() {
 
   const blogs = await Blog.find({ status: "published" });
 
-  const blogUrls = blogs.map((blog) => ({
-    url: `${baseUrl}/blog/${blog.slug}`,
-    lastModified: blog.updatedAt,
-  }));
+  const blogUrls = blogs.map((blog) => ({url: `${baseUrl}/blog/${blog.slug}`,lastModified: blog.updatedAt,}));
 
   return [
     {
