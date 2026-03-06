@@ -2,6 +2,10 @@
 @tailwind components;
 @tailwind utilities;
 
+::-webkit-scrollbar{
+  display: none;
+}
+
 @keyframes borderGlow {
   0% {
     border-image-source: linear-gradient(90deg, red, blue);
