@@ -1,7 +1,5 @@
-import { connectDB } from "../../lib/db.js";
-import Blog from "../../models/Blog.js";
-import BlogMedia from "../../Components/BlogMedia.jsx";
-import StructuredData from "../../Components/StructuredData.jsx";
+import { connectDB } from "@/app/lib/db";
+import Blog from "@/app/models/Blog";
 
 export async function generateMetadata({ params }) {
   await connectDB();
@@ -53,8 +51,7 @@ export async function generateMetadata({ params }) {
   }
 
   // ✅ If Blog Exists → Normal SEO
-  const title =
-    blog.seoTitle || `${blog.title} | Codeware IT Dehradun`;
+  const title = blog.seoTitle || `${blog.title} | Codeware IT Dehradun`;
 
   const description =
     blog.seoDescription ||
@@ -83,9 +80,7 @@ export async function generateMetadata({ params }) {
       card: "summary_large_image",
       title,
       description,
-      images: blog.thumbnail
-        ? [blog.thumbnail]
-        : [`${siteUrl}/logo.png`],
+      images: blog.thumbnail ? [blog.thumbnail] : [`${siteUrl}/logo.png`],
     },
   };
 }
@@ -95,34 +90,29 @@ export default async function BlogPage({ params }) {
   const { slug } = await params;
   const blog = await Blog.findOne({
     slug: slug,
-    status: "published",
   });
 
   if (!blog) {
     return (
       <div className="text-center py-20">
-        <h1 className="text-3xl font-bold">
-          Blog Not Found
-        </h1>
+        <h1 className="text-3xl font-bold">Blog Not Found</h1>
       </div>
     );
   }
 
   return (
     <div className="bg-gray-50 min-h-screen py-20">
-  
       <div className="max-w-3xl mx-auto bg-white p-12 rounded-2xl shadow-lg">
-  
         {/* Title */}
         <h1 className="text-4xl font-bold text-gray-900 leading-tight mb-6">
           {blog.title}
         </h1>
-  
+
         {/* Date */}
         <p className="text-gray-500 text-sm mb-10">
           {new Date(blog.createdAt).toDateString()}
         </p>
-  
+
         {/* Featured Image */}
         {blog.mediaType === "image" && blog.thumbnail && (
           <img
@@ -131,7 +121,7 @@ export default async function BlogPage({ params }) {
             className="w-full rounded-xl mb-10"
           />
         )}
-  
+
         {/* YouTube */}
         {blog.mediaType === "youtube" && blog.youtubeUrl && (
           <div className="aspect-video mb-10">
@@ -142,7 +132,7 @@ export default async function BlogPage({ params }) {
             />
           </div>
         )}
-  
+
         {/* Content */}
         <article
           className="prose prose-lg max-w-none
@@ -155,9 +145,7 @@ export default async function BlogPage({ params }) {
                      prose-h3:text-xl"
           dangerouslySetInnerHTML={{ __html: blog.content }}
         />
-  
       </div>
-  
     </div>
   );
 }
