@@ -6,6 +6,7 @@ import Whatsappicon from "./Components/Whatsappicon";
 import MetaPixel from "./Components/MetaPixel";
 import RouteChangeTracker from "./Components/RouteChangeTracker";
 import GoogleAnalytics from "./Components/GoogleAnalytics";
+import Script from "next/script";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
