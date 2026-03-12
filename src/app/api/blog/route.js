@@ -3,6 +3,8 @@ import Blog from "../../models/Blog.js";
 import slugify from "slugify";
 
 import { addInternalLinks } from "../../lib/internalLinker";
+import { pingGoogle } from "@/app/lib/pingGoogle.js";
+import { indexURL } from "@/app/lib/googleIndexing.js";
 
 export async function POST(req) {
   try {
@@ -29,9 +31,11 @@ export async function POST(req) {
       thumbnail: safeThumbnail,
       status: body.status || "draft",
       slug,
-      seoKeywords: body.keywords
+      seoKeywords: body.keywords,
     });
 
+    await pingGoogle();
+    await indexURL(`https://www.codewareit.in/blog/${blog.slug}`);
     return Response.json(blog);
   } catch (error) {
     console.log(error);
@@ -39,15 +43,10 @@ export async function POST(req) {
   }
 }
 
-
-  
-
 export async function GET() {
-
   await connectDB();
 
   const blogs = await Blog.find().sort({ createdAt: -1 });
 
   return Response.json(blogs);
-
 }
